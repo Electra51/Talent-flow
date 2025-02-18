@@ -4,21 +4,20 @@ import { sidebarData } from "../Data";
 const Sidebar = () => {
   return (
     <div className="w-[270px] bg-blue-50 h-[100vh] relative">
-      <div className="mt-10">
+      <div className="!mt-0">
         {sidebarData
           .filter((item) => !item.role || item.role === 1)
           .map((item, index) => (
-            <div key={index}>
+            <div key={index} className="pt-[3px] md:pt-[6px]">
               <NavLink
                 to={item?.link}
                 className={({ isActive }) =>
-                  `flex items-center pl-7 py-2 text-[14px] hover:bg-blue-400 hover:border-0 hover:border-r-[6px] hover:border-blue-50 hover:text-white ${
+                  `flex items-center !pl-8 !py-2 text-[14px] hover:bg-[#2946AD] hover:border-0 hover:border-r-[6px] hover:border-[#EDC03D] hover:text-white ${
                     isActive
-                      ? "bg-blue-400 border-0 border-r-[6px] border-blue-50 text-white"
+                      ? "bg-[#2946AD] border-0 border-r-[6px] border-[#EDC03D] text-white"
                       : "text-[#5F5F5F] border-0 border-r-[6px] border-blue-50"
                   }`
                 }>
-                {item?.icon && <span className="mr-2">{item.icon}</span>}
                 <p>{item?.label}</p>
               </NavLink>
             </div>

@@ -10,9 +10,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", serif;
-}
-
-.contain {
-  width: 1330px;
-  margin: 0 auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }

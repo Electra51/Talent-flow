@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { MdMenu, MdOutlineAccountCircle } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import logo from "../../assets/logo.png";
+import logo1 from "../../assets/logo1.png";
 import { MoonIcon, SunIcon } from "./Icons";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,11 +30,13 @@ const Navbar = () => {
     <>
       <div className="bg-blue-50 text-black">
         {/* Navbar */}
-        <nav className="">
-          <div className="flex justify-between items-center border">
+        <nav className="!px-8">
+          <div className="flex justify-between items-center !py-2.5">
             <div className="flex justify-center items-center gap-1">
               <img src={logo} alt="" width={50} />
-              <p className="font-semibold text-xl">TalentFlow</p>
+              <p className="font-semibold text-2xl text-[#2946AD]">
+                Em<span className="text-[#EDC03D]">FL</span>ow
+              </p>
             </div>
 
             {/* Mobile Menu Button */}

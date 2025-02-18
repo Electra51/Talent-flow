@@ -1,15 +1,10 @@
-import { BiCategoryAlt, BiPurchaseTagAlt } from "react-icons/bi";
-import { FaRegBookmark, FaRegUserCircle } from "react-icons/fa";
-import { IoArrowBackSharp, IoSettingsOutline } from "react-icons/io5";
-import { LuLayoutDashboard } from "react-icons/lu";
-import {
-  MdListAlt,
-  MdOutlineAddchart,
-  MdOutlineCategory,
-} from "react-icons/md";
-import { PiUserListBold } from "react-icons/pi";
-import { RiFileEditLine } from "react-icons/ri";
-import { TbShoppingCartCopy } from "react-icons/tb";
+import img1 from "../assets/man1.jpeg";
+import img2 from "../assets/man2.jpeg";
+import img3 from "../assets/man3.jpeg";
+import img4 from "../assets/man4.jpeg";
+import img5 from "../assets/man5.jpeg";
+import img6 from "../assets/man6.jpeg";
+import img7 from "../assets/man7.jpeg";
 export const navData = [
   {
     path: "/",
@@ -37,22 +32,65 @@ export const sidebarData = [
   {
     link: "/employee-list",
     label: "Employee Card View",
-    icon: <LuLayoutDashboard />,
   },
   {
     link: "/employee-table",
     label: "Employee Table View",
-    icon: <PiUserListBold />,
   },
 
   {
-    link: "/dashboard/settings",
+    link: "/settings",
     label: "Settings",
-    icon: <IoSettingsOutline />,
+  },
+];
+export const employeeData = [
+  {
+    name: "John Doe",
+    profileImage: img1,
+    phone: "+1 555-1234",
+    email: "john.doe@example.com",
+    address: "123 Main St, New York, NY 10001",
   },
   {
-    link: "/",
-    label: "Back To Home",
-    icon: <IoArrowBackSharp />,
+    name: "Jane Smith",
+    profileImage: img6,
+    phone: "+1 555-5678",
+    email: "jane.smith@example.com",
+    address: "456 Elm St, Los Angeles, CA 90012",
+  },
+  {
+    name: "Michael Johnson",
+    profileImage: img2,
+    phone: "+1 555-9101",
+    email: "michael.johnson@example.com",
+    address: "789 Oak St, Chicago, IL 60605",
+  },
+  {
+    name: "Emily Davis",
+    profileImage: img7,
+    phone: "+1 555-1122",
+    email: "emily.davis@example.com",
+    address: "321 Pine St, Houston, TX 77002",
+  },
+  {
+    name: "Robert Brown",
+    profileImage: img5,
+    phone: "+1 555-3344",
+    email: "robert.brown@example.com",
+    address: "654 Maple St, San Francisco, CA 94103",
+  },
+  {
+    name: "Olivia Wilson",
+    profileImage: img4,
+    phone: "+1 555-5566",
+    email: "olivia.wilson@example.com",
+    address: "987 Cedar St, Miami, FL 33101",
+  },
+  {
+    name: "David Martinez",
+    profileImage: img3,
+    phone: "+1 555-7788",
+    email: "david.martinez@example.com",
+    address: "159 Birch St, Seattle, WA 98101",
   },
 ];

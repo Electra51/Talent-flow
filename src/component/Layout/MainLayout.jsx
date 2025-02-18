@@ -5,11 +5,11 @@ import Sidebar from "../Shared/Sidebar";
 
 const MainLayout = () => {
   return (
-    <div class="bg-white dark:bg-black">
+    <div class="bg-white dark:bg-black text-black dark:text-white">
       <Navbar />
       <div className="w-full flex">
         <Sidebar />{" "}
-        <div className="pl-5 pt-5">
+        <div className="w-full !p-3">
           {" "}
           <Outlet />
         </div>
