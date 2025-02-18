@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdMenu, MdOutlineAccountCircle } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import logo from "../../assets/logo.png";
+import { MoonIcon, SunIcon } from "./Icons";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dark, setDark] = useState(false);
 
+  const handleDark = () => {
+    setDark(!dark);
+    localStorage.setItem("dark-mode", !dark);
+  };
+  useEffect(() => {
+    const localDark = JSON.parse(localStorage.getItem("dark-mode"));
+    console.log(localDark);
+    setDark(localDark);
+  }, []);
+  useEffect(() => {
+    if (dark) {
+      document.querySelector("html").setAttribute("data-theme", "dark");
+    } else {
+      document.querySelector("html").setAttribute("data-theme", "portTheme");
+    }
+  }, [dark]);
+
+  const ref = useRef("");
   return (
     <>
       <div className="bg-blue-50 text-black">
@@ -22,7 +42,7 @@ const Navbar = () => {
             </button>
 
             {/* Desktop Nav Links */}
-            <ul className="hidden md:flex space-x-6">
+            <ul className="hidden md:flex space-x-10 md:justify-center md:gap-2">
               <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="">
                   <div className="rounded-full flex justify-center items-center gap-1 cursor-pointer">
@@ -46,6 +66,11 @@ const Navbar = () => {
                   </li>
                 </ul>
               </div>
+              <label className="swap swap-rotate mr-3">
+                <input type="checkbox" onClick={handleDark} />
+                <SunIcon className="swap-off" />
+                <MoonIcon className="swap-on" />
+              </label>
             </ul>
           </div>
         </nav>

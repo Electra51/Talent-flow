@@ -5,7 +5,7 @@ import Sidebar from "../Shared/Sidebar";
 
 const MainLayout = () => {
   return (
-    <div className="">
+    <div class="bg-white dark:bg-black">
       <Navbar />
       <div className="w-full flex">
         <Sidebar />{" "}

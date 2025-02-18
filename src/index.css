@@ -2,6 +2,9 @@
 
 @import "tailwindcss";
 @plugin "daisyui";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 * {
   margin: 0;
   padding: 0;
