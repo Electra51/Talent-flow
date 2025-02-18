@@ -2,10 +2,14 @@
 
 @import "tailwindcss";
 @plugin "daisyui";
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", serif;
+}
+
+.contain {
+  width: 1330px;
+  margin: 0 auto;
 }

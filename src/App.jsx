@@ -1,7 +1,10 @@
+import { RouterProvider } from "react-router";
+import { router } from "./Routes/Routes";
+
 function App() {
   return (
     <div>
-      <h1 class="text-3xl font-bold underline">Welcome to TalentFlow</h1>
+      <RouterProvider router={router} />
     </div>
   );
 }
