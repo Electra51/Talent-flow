@@ -5,43 +5,54 @@ import img4 from "../assets/man4.jpeg";
 import img5 from "../assets/man5.jpeg";
 import img6 from "../assets/man6.jpeg";
 import img7 from "../assets/man7.jpeg";
-
-export const navData = [
-  {
-    path: "/",
-    title: "Home",
-  },
-  {
-    path: "/services",
-    title: "Services",
-  },
-  {
-    path: "/shop",
-    title: "Shop",
-  },
-  {
-    path: "/about",
-    title: "About",
-  },
-  {
-    path: "/contact",
-    title: "Contact",
-  },
-];
+import { MdDashboard } from "react-icons/md";
+import { FaIdCard } from "react-icons/fa6";
+import { BsTable } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import { FiLogOut } from "react-icons/fi";
 
 export const sidebarData = [
   {
+    link: "/",
+    label: "Dashboard",
+    icon: <MdDashboard />,
+  },
+  {
     link: "/employee-list",
     label: "Employee Card View",
+    icon: <FaIdCard />,
   },
   {
     link: "/employee-table",
     label: "Employee Table View",
+    icon: <BsTable />,
   },
-
+];
+export const sidebarDataForMobile = [
   {
-    link: "/settings",
-    label: "Settings",
+    link: "/",
+    label: "Dashboard",
+    icon: <MdDashboard />,
+  },
+  {
+    link: "/employee-list",
+    label: "Employee Card View",
+    icon: <FaIdCard />,
+  },
+  {
+    link: "/employee-table",
+    label: "Employee Table View",
+    icon: <BsTable />,
+  },
+  {
+    link: "/profile",
+    label: "Profile",
+    icon: <CgProfile />,
+  },
+  {
+    link: "/login",
+    label: "Login",
+    icon: <FiLogOut />,
   },
 ];
 export const employeeData = [

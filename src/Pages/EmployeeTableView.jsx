@@ -9,6 +9,7 @@ import img5 from "../assets/man5.jpeg";
 import img6 from "../assets/man6.jpeg";
 import img7 from "../assets/man7.jpeg";
 import PageHeader from "../component/Shared/PageHeader";
+import Modal from "../component/Shared/Modal";
 
 const getInitialEmployees = () => {
   const storedEmployees = localStorage.getItem("employees");
@@ -76,6 +77,7 @@ const EmployeeTableView = () => {
     phone: "",
     email: "",
     address: "",
+    profileImage: "",
   });
 
   useEffect(() => {
@@ -96,12 +98,29 @@ const EmployeeTableView = () => {
   };
 
   // Create or Update Employee
+  // const handleSave = () => {
+  //   if (actionType === "create") {
+  //     const newEmployee = {
+  //       ...value,
+  //       id: Date.now(),
+  //       profileImage: "https://via.placeholder.com/56",
+  //     };
+  //     setEmployees([...employees, newEmployee]);
+  //   } else if (actionType === "edit") {
+  //     setEmployees(
+  //       employees.map((emp) =>
+  //         emp.id === selectedEmployee.id ? { ...emp, ...value } : emp
+  //       )
+  //     );
+  //   }
+  //   document.getElementById("employee_modal").close();
+  // };
   const handleSave = () => {
     if (actionType === "create") {
       const newEmployee = {
         ...value,
         id: Date.now(),
-        profileImage: "https://via.placeholder.com/56",
+        profileImage: value.profileImage || "https://via.placeholder.com/56",
       };
       setEmployees([...employees, newEmployee]);
     } else if (actionType === "edit") {
@@ -118,6 +137,17 @@ const EmployeeTableView = () => {
   const handleDelete = () => {
     setEmployees(employees.filter((emp) => emp.id !== selectedEmployee.id));
     document.getElementById("employee_modal").close();
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setValue({ ...value, profileImage: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   // Define Table Columns
@@ -139,11 +169,11 @@ const EmployeeTableView = () => {
       cell: (row) => (
         <div className="flex gap-2">
           <MdEdit
-            className="text-blue-500 cursor-pointer"
+            className="text-blue-500 cursor-pointer text-xl"
             onClick={() => openModal(row, "edit")}
           />
           <MdDelete
-            className="text-red-500 cursor-pointer"
+            className="text-red-500 cursor-pointer text-xl"
             onClick={() => openModal(row, "delete")}
           />
         </div>
@@ -159,87 +189,18 @@ const EmployeeTableView = () => {
         buttonName={"Add Employee"}
         menu={"Employee Table View"}
       />
-      <DataTable columns={columns} data={employees} />
-
-      {/* Modal */}
-      <dialog
-        id="employee_modal"
-        className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box bg-white dark:bg-gray-400">
-          <h3 className="font-bold text-lg">
-            {actionType === "create"
-              ? "Add Employee"
-              : actionType === "edit"
-              ? "Edit Employee"
-              : "Delete Employee"}
-          </h3>
-
-          {actionType === "delete" ? (
-            <p>
-              Are you sure you want to delete{" "}
-              <strong>{selectedEmployee?.name}</strong>?
-            </p>
-          ) : (
-            <form className="flex flex-col gap-2">
-              <input
-                type="text"
-                name="name"
-                value={value.name}
-                onChange={handleChange}
-                placeholder="Name"
-                className="input input-bordered"
-                required
-              />
-              <input
-                type="text"
-                name="phone"
-                value={value.phone}
-                onChange={handleChange}
-                placeholder="Phone"
-                className="input input-bordered"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                value={value.email}
-                onChange={handleChange}
-                placeholder="Email"
-                className="input input-bordered"
-                required
-              />
-              <input
-                type="text"
-                name="address"
-                value={value.address}
-                onChange={handleChange}
-                placeholder="Address"
-                className="input input-bordered"
-                required
-              />
-            </form>
-          )}
-
-          <div className="modal-action">
-            <form method="dialog">
-              <button className="btn">Close</button>
-            </form>
-            {actionType === "delete" ? (
-              <button
-                className="btn bg-red-500 text-white"
-                onClick={handleDelete}>
-                Confirm Delete
-              </button>
-            ) : (
-              <button
-                className="btn bg-blue-500 text-white"
-                onClick={handleSave}>
-                {actionType === "edit" ? "Update" : "Create"}
-              </button>
-            )}
-          </div>
-        </div>
-      </dialog>
+      <div className="border border-gray-300 rounded-sm">
+        <DataTable columns={columns} data={employees} />
+      </div>
+      <Modal
+        actionType={actionType}
+        selectedEmployee={selectedEmployee}
+        value={value}
+        handleChange={handleChange}
+        handleDelete={handleDelete}
+        handleSave={handleSave}
+        handleImageUpload={handleImageUpload}
+      />
     </div>
   );
 };
