@@ -1,12 +1,11 @@
 import React from "react";
 import { employeeData } from "../component/Data";
+import PageHeader from "../component/Shared/PageHeader";
 
 const EmployeeCardView = () => {
   return (
     <div>
-      <p className="border-0 border-b w-[120px] border-gray-200 !pl-1">
-        Employee List
-      </p>
+      <PageHeader title={"Employee Card View"} menu={"Employee Card View"} />
       <div className="!mt-7 grid grid-cols-5 gap-10">
         {employeeData?.map((e, i) => {
           console.log("e", e);

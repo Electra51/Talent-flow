@@ -5,6 +5,7 @@ import img4 from "../assets/man4.jpeg";
 import img5 from "../assets/man5.jpeg";
 import img6 from "../assets/man6.jpeg";
 import img7 from "../assets/man7.jpeg";
+
 export const navData = [
   {
     path: "/",
