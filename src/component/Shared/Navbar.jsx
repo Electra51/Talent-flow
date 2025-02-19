@@ -38,11 +38,11 @@ const Navbar = () => {
           <div className="flex justify-between items-center !py-4">
             <Logo />
             <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? "" : <MdMenu className="text-xl" />}
+              {isOpen ? "" : <MdMenu className="text-xl text-[#2946AD]" />}
             </button>
             {/* desktop nav */}
             <ul className="hidden md:flex space-x-10 md:justify-center md:gap-2">
-              <div className="rounded-full flex justify-center items-center gap-1 cursor-pointer relative">
+              <div className="rounded-full flex justify-center items-center gap-1 cursor-pointer relative !mr-2">
                 <MdOutlineAccountCircle
                   className="text-2xl"
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
@@ -64,7 +64,7 @@ const Navbar = () => {
                 </ul>
               )}
 
-              <label className="swap swap-rotate mr-3">
+              <label className="swap swap-rotate">
                 <input type="checkbox" onClick={handleDark} />
                 <SunIcon className="swap-off" />
                 <MoonIcon className="swap-on" />
@@ -92,6 +92,7 @@ const Navbar = () => {
             {sidebarDataForMobile?.map((sideMenu, i) => {
               return (
                 <NavLink
+                  onClick={() => setIsOpen(false)}
                   key={i}
                   to={sideMenu?.link}
                   className={({ isActive }) =>
@@ -112,7 +113,6 @@ const Navbar = () => {
         </ul>
       </div>
 
-      {/* Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 md:hidden -z-0"
