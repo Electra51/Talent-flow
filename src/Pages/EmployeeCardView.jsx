@@ -1,74 +1,5 @@
-// import React, { useEffect, useState } from "react";
-// import { employeeData } from "../component/Data";
-// import PageHeader from "../component/Shared/PageHeader";
-
-// const getInitialEmployees = () => {
-//   const storedEmployees = localStorage.getItem("employees");
-//   return storedEmployees
-//     ? JSON.parse(storedEmployees)
-//     : [
-//         {
-//           name: "John Doe",
-//           profileImage: img1,
-//           phone: "+1 555-1234",
-//           email: "john.doe@example.com",
-//           address: "123 Main St, New York, NY 10001",
-//         },
-//         {
-//           name: "Jane Smith",
-//           profileImage: img6,
-//           phone: "+1 555-5678",
-//           email: "jane.smith@example.com",
-//           address: "456 Elm St, Los Angeles, CA 90012",
-//         },
-//       ];
-// };
-
-// const EmployeeCardView = () => {
-//   const [employees, setEmployees] = useState(getInitialEmployees);
-//   useEffect(() => {
-//     localStorage.setItem("employees", JSON.stringify(employees));
-//   }, [employees]);
-
-//   return (
-//     <div>
-//       <PageHeader title={"Employee Card View"} menu={"Employee Card View"} />
-//       <div className="!mt-7 grid grid-cols-5 gap-10">
-//         {employeeData?.map((e, i) => {
-//           console.log("e", e);
-//           return (
-//             <div key={i}>
-//               <div className="card bg-white dark:bg-base-200 shadow-xl h-[260px] border !py-4">
-//                 <div className="avatar !mx-auto">
-//                   <div className="w-24 rounded-full">
-//                     <img src={e?.profileImage} alt="Shoes" />
-//                   </div>
-//                 </div>
-//                 <div className="card-body text-center">
-//                   <h2 className="card-title !mx-auto">{e?.name}</h2>
-//                   <p>
-//                     <span>Email: </span>
-//                     {e?.email}
-//                   </p>
-//                   <p className="text-wrap !mt-0">
-//                     <span>Address: </span>
-//                     {e?.address}
-//                   </p>
-//                 </div>
-//               </div>
-//             </div>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default EmployeeCardView;
-
 import React, { useState, useEffect } from "react";
-import DataTable from "react-data-table-component";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdDelete, MdEmail, MdLocationPin, MdPhone } from "react-icons/md";
 import img1 from "../assets/man1.jpeg";
 import img6 from "../assets/man6.jpeg";
 import PageHeader from "../component/Shared/PageHeader";
@@ -126,40 +57,40 @@ const EmployeeCardView = () => {
         openModal={openModal}
         menu={"Employee Card View"}
       />
-      <div className="border border-gray-300 rounded-sm grid grid-cols-4 gap-10">
+      <div className="rounded-sm grid grid-cols-4 gap-10">
         {employees?.map((employee, i) => {
           console.log("em", employee);
           return (
-            <div key={i}>
-              <div className="card bg-white dark:bg-base-200 shadow-xl h-[280px] border !py-6">
-                <div className="avatar !mx-auto">
-                  <div className="w-24 rounded-full">
-                    <img src={employee?.profileImage} alt="Shoes" />
-                  </div>
-                </div>
+            <div
+              className="bg-white dark:bg-base-200 shadow-xl h-[430px] border border-gray-300  rounded-sm w-[365px]"
+              key={i}>
+              <div className="avatar !mx-auto !py-4 !px-2 h-[230px] w-[365px]">
+                <img
+                  src={employee?.profileImage}
+                  alt={employee?.name}
+                  className="w-full h-full !object-contain"
+                />
+              </div>
 
-                <div className="card-body text-center">
-                  <h2 className="card-title !mx-auto">{employee?.name}</h2>
-
-                  <p>
-                    <span>Email: </span>
-                    {employee?.email}
-                  </p>
-                  <p>
-                    <span>Phone: </span>
-                    {employee?.phone}
-                  </p>
-                  <p className="text-wrap !mt-0">
-                    <span>Address: </span>
-                    {employee?.address}
-                  </p>
-                  <button
-                    className="flex justify-center items-center gap-1.5 text-red-500 border border-red-500 w-[100px] !mx-auto !mt-4 !py-1.5 rounded-[2px] group hover:bg-red-500 hover:text-white"
-                    onClick={() => openModal(employee, "delete")}>
-                    Delete
-                    <MdDelete className="text-red-500 group-hover:text-white cursor-pointer text-xl" />
-                  </button>
-                </div>
+              <div className="!px-6">
+                <h2 className="font-bold text-[18px]">{employee?.name}</h2>
+                <p className="!p-0 flex justify-start items-center gap-1.5 !mt-2">
+                  <MdEmail /> {employee?.email}
+                </p>
+                <p className="!p-0 flex justify-start items-center gap-1.5">
+                  <MdPhone />
+                  {employee?.phone}
+                </p>
+                <p className="!p-0 flex justify-start items-center gap-1.5">
+                  <MdLocationPin />
+                  {employee?.address}
+                </p>
+                <button
+                  className="flex justify-center items-center gap-1.5 text-white border border-red-500 w-[100px] !mr-auto !mt-5 !py-1.5 rounded-[2px] bg-red-500 group hover:bg-red-600 hover:text-white cursor-pointer"
+                  onClick={() => openModal(employee, "delete")}>
+                  Delete
+                  <MdDelete className="text-white group-hover:text-white cursor-pointer text-xl" />
+                </button>
               </div>
             </div>
           );

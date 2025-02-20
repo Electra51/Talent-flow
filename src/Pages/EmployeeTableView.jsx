@@ -1,128 +1,60 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import PageHeader from "../component/Shared/PageHeader";
+import axios from "axios";
 import DataTable from "react-data-table-component";
 import { MdDelete, MdEdit } from "react-icons/md";
-import img1 from "../assets/man1.jpeg";
-import img6 from "../assets/man6.jpeg";
-import PageHeader from "../component/Shared/PageHeader";
-import Modal from "../component/Shared/Modal";
-
-const getInitialEmployees = () => {
-  const storedEmployees = localStorage.getItem("employees");
-  return storedEmployees
-    ? JSON.parse(storedEmployees)
-    : [
-        {
-          name: "John Doe",
-          profileImage: img1,
-          phone: "+1 555-1234",
-          email: "john.doe@example.com",
-          address: "123 Main St, New York, NY 10001",
-        },
-        {
-          name: "Jane Smith",
-          profileImage: img6,
-          phone: "+1 555-5678",
-          email: "jane.smith@example.com",
-          address: "456 Elm St, Los Angeles, CA 90012",
-        },
-      ];
-};
+import EmployeeAddModal from "../component/Modal/EmployeeAddModal";
 
 const EmployeeTableView = () => {
-  const [employees, setEmployees] = useState(getInitialEmployees);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [actionType, setActionType] = useState("");
-  const [value, setValue] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    address: "",
-    profileImage: "",
-  });
-
-  useEffect(() => {
-    localStorage.setItem("employees", JSON.stringify(employees));
-  }, [employees]);
-
-  // Open Modal
-  const openModal = (employee = null, type) => {
-    setSelectedEmployee(employee);
-    setActionType(type);
-    setValue(employee || { name: "", phone: "", email: "", address: "" });
-    document.getElementById("employee_modal").showModal();
-  };
-
-  // Handle Input Change
-  const handleChange = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
-  };
-
-  // Create or Update Employee
-  // const handleSave = () => {
-  //   if (actionType === "create") {
-  //     const newEmployee = {
-  //       ...value,
-  //       id: Date.now(),
-  //       profileImage: "https://via.placeholder.com/56",
-  //     };
-  //     setEmployees([...employees, newEmployee]);
-  //   } else if (actionType === "edit") {
-  //     setEmployees(
-  //       employees.map((emp) =>
-  //         emp.id === selectedEmployee.id ? { ...emp, ...value } : emp
-  //       )
-  //     );
-  //   }
-  //   document.getElementById("employee_modal").close();
-  // };
-  const handleSave = () => {
-    if (actionType === "create") {
-      const newEmployee = {
-        ...value,
-        id: Date.now(),
-        profileImage: value.profileImage || "https://via.placeholder.com/56",
-      };
-      setEmployees([...employees, newEmployee]);
-    } else if (actionType === "edit") {
-      setEmployees(
-        employees.map((emp) =>
-          emp.id === selectedEmployee.id ? { ...emp, ...value } : emp
-        )
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [employeeData, setEmployeeData] = useState();
+  const fetchEmployeeData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/employee/employee-all"
       );
-    }
-    document.getElementById("employee_modal").close();
-  };
-
-  // Delete Employee
-  const handleDelete = () => {
-    setEmployees(employees.filter((emp) => emp.id !== selectedEmployee.id));
-    document.getElementById("employee_modal").close();
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setValue({ ...value, profileImage: reader.result });
-      };
-      reader.readAsDataURL(file);
+      if (response.status === 200) {
+        setEmployeeData(response.data);
+      }
+    } catch (err) {
+      setError(err.message || "Error fetching data");
+    } finally {
+      setLoading(false);
     }
   };
+  useEffect(() => {
+    fetchEmployeeData();
+  }, []);
 
-  // Define Table Columns
   const columns = [
+    {
+      name: "Employee Name",
+      selector: (row, index) => (
+        <>
+          {index + 1}. {row.employee_name}
+        </>
+      ),
+    },
+    { name: "Phone", selector: (row) => row.phone },
+    { name: "Email", selector: (row) => row.email },
+    { name: "Status", selector: (row) => row.status },
+    { name: "Department", selector: (row) => row.department },
+    { name: "Address", selector: (row) => row.address },
     {
       name: "Profile Img",
       grow: 0,
       cell: (row) => (
-        <img height="56px" width="56px" alt={row.name} src={row.profileImage} />
+        <img
+          height="56px"
+          width="56px"
+          alt={row.employee_name}
+          src={row.profile_picture}
+        />
       ),
     },
-    { name: "Name", selector: (row) => row.name },
-    { name: "Phone", selector: (row) => row.phone },
-    { name: "Email", selector: (row) => row.email },
-    { name: "Address", selector: (row) => row.address },
     {
       name: "Actions",
       button: true,
@@ -140,27 +72,32 @@ const EmployeeTableView = () => {
       ),
     },
   ];
-
   return (
     <div>
-      <PageHeader
-        title={"Employee Table View"}
-        openModal={openModal}
-        buttonName={"Add Employee"}
-        menu={"Employee Table View"}
-      />
-      <div className="border border-gray-300 rounded-sm">
-        <DataTable columns={columns} data={employees} />
+      <div className="flex justify-between items-start">
+        <PageHeader title={"Employee table View"} />
+        <button
+          className="bg-[#81B2F1] hover:bg-[#2A46AD] cursor-pointer text-white rounded-sm !px-2.5 !py-1.5 font-medium text-[14px]"
+          onClick={() => setIsModalOpen(true)}
+          style={{
+            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+          }}>
+          + Create Employee
+        </button>
       </div>
-      <Modal
-        actionType={actionType}
-        selectedEmployee={selectedEmployee}
-        value={value}
-        handleChange={handleChange}
-        handleDelete={handleDelete}
-        handleSave={handleSave}
-        handleImageUpload={handleImageUpload}
-      />
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <div className="border border-gray-300 rounded-sm">
+          <DataTable columns={columns} data={employeeData} />
+        </div>
+      )}
+      {isModalOpen && (
+        <EmployeeAddModal
+          onClose={() => setIsModalOpen(false)}
+          fetchEmployeeData={fetchEmployeeData}
+        />
+      )}
     </div>
   );
 };

@@ -65,26 +65,44 @@ const Modal = ({
                   />
                 </div>
               </div>
-              {/* <div className="h-[120px] border border-gray-300 !mt-5 rounded-[2px] flex justify-center items-center">
-                <BiImageAdd className="text-2xl text-gray-400" />
-              </div> */}
-              {/* Image Upload Section */}
+
               <div className="h-[120px] border border-gray-300 !mt-5 rounded-[2px] flex flex-col justify-center items-center">
-                {imagePreview ? (
-                  <img
-                    src={imagePreview}
-                    alt="Profile"
-                    className="w-20 h-20 rounded-full"
-                  />
-                ) : (
-                  <BiImageAdd className="text-2xl text-gray-400" />
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="border border-gray-300 rounded w-full py-1 px-1.5 text-gray-700"
-                />
+                <div className="my-5 ">
+                  <p className="text-[14px] font-normal mb-[10px] mt-5">
+                    Featured Image
+                  </p>
+                  <div
+                    {...getRootProps()}
+                    className="flex justify-normal items-center gap-[18px] mt-1">
+                    <div className="w-[383px] h-[222px] border border-dashed rounded-md flex flex-col justify-center items-center">
+                      <input {...getInputProps()} />
+                      <div className="h-[40px] w-[40px] rounded-full bg-[#76c4eb] flex justify-center items-center">
+                        <MdOutlineFileUpload className="text-white text-xl" />
+                      </div>
+                      <p className="mt-[16px] mb-[3px]">
+                        Drag & Drop or{" "}
+                        <span className="text-[#76c4eb]">Choose</span> image to
+                        upload
+                      </p>
+                      <p className="text-[#5F5F5F] text-[14px] font-normal">
+                        Supported formats: PNG, JPG, JPEG
+                      </p>
+                    </div>
+                    {featuredImage ? (
+                      <div className="w-[383px] h-[222px] bg-[#F4F8FA] flex justify-center items-center rounded-[4px]">
+                        <img
+                          src={URL.createObjectURL(featuredImage)}
+                          alt="Featured"
+                          width={97}
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-[383px] h-[222px] bg-[#F4F8FA] flex justify-center items-center rounded-[4px]">
+                        <BiImageAdd className="text-2xl text-gray-400" />
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
 

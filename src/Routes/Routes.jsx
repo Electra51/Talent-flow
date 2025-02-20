@@ -2,8 +2,8 @@ import ErrorPage from "../Pages/ErrorPage";
 import MainLayout from "../component/Layout/MainLayout";
 import { createBrowserRouter } from "react-router";
 import EmployeeCardView from "../Pages/EmployeeCardView";
-import EmployeeTableView from "../Pages/EmployeeTableView";
 import Dashboard from "../Pages/Dashboard";
+import EmployeeTableView from "../Pages/EmployeeTableView";
 
 export const router = createBrowserRouter([
   {

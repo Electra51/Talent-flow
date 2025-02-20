@@ -13,3 +13,9 @@
   overflow-x: hidden;
   overflow-y: hidden;
 }
+
+input,
+select,
+textarea:focus {
+  outline: none;
+}
