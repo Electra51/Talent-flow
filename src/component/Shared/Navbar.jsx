@@ -27,13 +27,13 @@ const Navbar = () => {
     if (dark) {
       document.querySelector("html").setAttribute("data-theme", "dark");
     } else {
-      document.querySelector("html").setAttribute("data-theme", "portTheme");
+      document.querySelector("html").setAttribute("data-theme", "light");
     }
   }, [dark]);
 
   return (
     <>
-      <div className="bg-blue-50 text-black">
+      <div className="bg-blue-50 dark:bg-[#111111] text-black">
         <nav className="!px-8">
           <div className="flex justify-between items-center !py-4">
             <Logo />
@@ -42,7 +42,7 @@ const Navbar = () => {
             </button>
             {/* desktop nav */}
             <ul className="hidden md:flex space-x-10 md:justify-center md:gap-2">
-              <div className="rounded-full flex justify-center items-center gap-1 cursor-pointer relative !mr-2">
+              <div className="rounded-full flex justify-center items-center gap-1 cursor-pointer relative !mr-2 text-[#5F5F5F] dark:text-gray-400">
                 <MdOutlineAccountCircle
                   className="text-2xl"
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
@@ -51,14 +51,14 @@ const Navbar = () => {
               {isProfileOpen && (
                 <ul
                   tabIndex={0}
-                  className="absolute top-16 right-2 menu menu-sm dropdown-content bg-white dark:bg-green-500 rounded-[2px] w-52 !p-2 shadow !space-y-2">
+                  className="absolute top-16 right-2 menu menu-sm dropdown-content bg-white dark:bg-[#545454] rounded-[2px] w-52 !p-2 shadow !space-y-2">
                   <Link
                     to={"/profile"}
-                    className="hover:bg-[#2946AD] hover:text-white !px-2 !py-1 rounded-[2px] flex justify-start items-center gap-1.5 font-medium">
+                    className="hover:bg-[#2946AD] dark:hover:bg-[#3c3c3c] text-black dark:text-[#bab8b8] hover:text-white !px-2 !py-1 rounded-[2px] flex justify-start items-center gap-1.5 font-medium">
                     <CgProfile className="text-[16px]" /> Profile
                   </Link>
 
-                  <Link className="hover:bg-[#2946AD] hover:text-white !px-2 !py-1 rounded-[2px] flex justify-start items-center gap-1.5 font-medium">
+                  <Link className="hover:bg-[#2946AD] dark:hover:bg-[#3c3c3c] text-black dark:text-[#bab8b8] hover:text-white !px-2 !py-1 rounded-[2px] flex justify-start items-center gap-1.5 font-medium">
                     <FiLogOut className="text-[16px]" /> Logout
                   </Link>
                 </ul>

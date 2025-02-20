@@ -47,6 +47,7 @@ textarea:focus {
   }
 }
 [id^="row-"] {
+  /* background: #dcdbdb !important; */
   transition: transform 0.3s ease, background 0.2s ease;
 }
 [id^="row-"]:hover {

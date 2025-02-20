@@ -108,6 +108,7 @@ const EmployeeTableView = () => {
       ),
     },
   ];
+
   return (
     <div>
       <PageHeader
@@ -126,11 +127,26 @@ const EmployeeTableView = () => {
         </div>
       ) : (
         <div className="border border-gray-300 rounded-sm">
-          {searchTerm || selectedFilter ? (
-            <DataTable columns={columns} data={filteredEmployeeData} />
+          {/* {searchTerm || selectedFilter ? (
+            <DataTable
+              columns={columns}
+              data={filteredEmployeeData}
+              className="dark:bg-red-900 dark:text-white"
+            />
           ) : (
-            <DataTable columns={columns} data={employeeData} />
-          )}
+            <DataTable
+              columns={columns}
+              data={employeeData}
+              className="dark:bg-red-900 dark:text-white"
+            />
+          )} */}
+          <DataTable
+            columns={columns}
+            data={
+              searchTerm || selectedFilter ? filteredEmployeeData : employeeData
+            }
+            // className="dark:bg-red-900 dark:text-white"
+          />
         </div>
       )}
       {isModalOpen && (
