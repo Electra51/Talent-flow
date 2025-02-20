@@ -4,12 +4,18 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 import { MdDelete, MdEdit } from "react-icons/md";
 import EmployeeAddModal from "../component/Modal/EmployeeAddModal";
+import EmployeeEditModal from "../component/Modal/EmployeeEditModal";
+import DeleteConfirmationModal from "../component/Modal/DeleteConfirmationModal";
 
 const EmployeeTableView = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
+    useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [employeeData, setEmployeeData] = useState();
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
   const fetchEmployeeData = async () => {
     setLoading(true);
     try {
@@ -62,11 +68,17 @@ const EmployeeTableView = () => {
         <div className="flex gap-2">
           <MdEdit
             className="text-blue-500 cursor-pointer text-xl"
-            onClick={() => openModal(row, "edit")}
+            onClick={() => {
+              setSelectedEmployee(row);
+              setIsEditModalOpen(true);
+            }}
           />
           <MdDelete
             className="text-red-500 cursor-pointer text-xl"
-            onClick={() => openModal(row, "delete")}
+            onClick={() => {
+              setSelectedEmployee(row);
+              setIsDeleteConfirmModalOpen(true);
+            }}
           />
         </div>
       ),
@@ -95,6 +107,26 @@ const EmployeeTableView = () => {
       {isModalOpen && (
         <EmployeeAddModal
           onClose={() => setIsModalOpen(false)}
+          fetchEmployeeData={fetchEmployeeData}
+        />
+      )}
+      {isEditModalOpen && (
+        <EmployeeEditModal
+          employee={selectedEmployee}
+          onClose={() => {
+            setIsEditModalOpen(false);
+            setSelectedEmployee(null);
+          }}
+          fetchEmployeeData={fetchEmployeeData}
+        />
+      )}
+      {isDeleteConfirmModalOpen && (
+        <DeleteConfirmationModal
+          employee={selectedEmployee}
+          onClose={() => {
+            setIsDeleteConfirmModalOpen(false);
+            setSelectedEmployee(null);
+          }}
           fetchEmployeeData={fetchEmployeeData}
         />
       )}
