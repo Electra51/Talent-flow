@@ -109,8 +109,8 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
     <dialog
       id="employee_modal_edit"
       className="modal modal-bottom sm:modal-middle">
-      <div className="modal-box bg-white dark:bg-gray-400 !px-5 !py-4">
-        <p className="font-medium text-[16px] !mb-3 border-0 border-b border-gray-200">
+      <div className="modal-box bg-white dark:bg-[#1e1e1e] border border-gray-50 dark:border-[#3c3c3c] !px-5 !py-4">
+        <p className="font-medium text-[16px] !mb-3 border-0 border-b border-gray-200 dark:border-[#3c3c3c]">
           Edit Employee Here
         </p>
         <form className="!p-1 !mt-3">
@@ -123,7 +123,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
                 value={value.employee_name}
                 onChange={handleChange}
                 placeholder="Name"
-                className="border border-gray-300 !rounded-[2px] w-full !py-1 !px-1.5 text-gray-700"
+                className="border border-gray-300 dark:border-[#3c3c3c] dark:bg-[#111111]  text-gray-700 dark:text-gray-200 !rounded-[2px] w-full !py-1 !px-1.5 "
                 required
               />
             </div>
@@ -135,7 +135,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
                 value={value.phone}
                 onChange={handleChange}
                 placeholder="Phone"
-                className="border border-gray-300 !rounded-[2px] w-full !py-1 !px-1.5 text-gray-700"
+                className="border border-gray-300 dark:border-[#3c3c3c] dark:bg-[#111111]  text-gray-700 dark:text-gray-200 !rounded-[2px] w-full !py-1 !px-1.5 "
                 required
               />
             </div>
@@ -145,7 +145,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
                 name="status"
                 value={value.status}
                 onChange={handleChange}
-                className="border border-gray-300 !rounded-[2px] w-full !py-1 !px-1.5 text-gray-700"
+                className="border border-gray-300 dark:border-[#3c3c3c] dark:bg-[#111111]  text-gray-700 dark:text-gray-200 !rounded-[2px] w-full !py-1 !px-1.5 "
                 required>
                 <option value="">Select Status</option>
                 {statusOptions.map((status) => (
@@ -161,7 +161,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
                 name="department"
                 value={value.department}
                 onChange={handleChange}
-                className="border border-gray-300 !rounded-[2px] w-full !py-1 !px-1.5 text-gray-700"
+                className="border border-gray-300 dark:border-[#3c3c3c] dark:bg-[#111111]  text-gray-700 dark:text-gray-200 !rounded-[2px] w-full !py-1 !px-1.5 "
                 required>
                 <option value="">Select Department</option>
                 {departmentOptions.map((dept) => (
@@ -180,7 +180,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
               value={value.email}
               onChange={handleChange}
               placeholder="Email"
-              className="border border-gray-300 !rounded-[2px] w-full !py-1 !px-1.5 text-gray-700"
+              className="border border-gray-300 dark:border-[#3c3c3c] dark:bg-[#111111]  text-gray-700 dark:text-gray-200 !rounded-[2px] w-full !py-1 !px-1.5 "
               required
             />
           </div>
@@ -192,7 +192,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
               value={value.address}
               onChange={handleChange}
               placeholder="Address"
-              className="border border-gray-300 !rounded-[2px] w-full !py-1 !px-1.5 text-gray-700"
+              className="border border-gray-300 dark:border-[#3c3c3c] dark:bg-[#111111]  text-gray-700 dark:text-gray-200 !rounded-[2px] w-full !py-1 !px-1.5 "
               required
             />
           </div>
@@ -215,7 +215,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
                 </p>
               </div>
               {profileImage ? (
-                <div className="h-[130px] bg-[#F4F8FA] flex justify-center items-center rounded-[2px]">
+                <div className="h-[130px] bg-[#F4F8FA] dark:bg-[#3c3c3c] flex justify-center items-center rounded-[2px]">
                   <img
                     src={URL.createObjectURL(profileImage)}
                     alt="Profile"
@@ -223,7 +223,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
                   />
                 </div>
               ) : (
-                <div className="h-[130px] bg-[#F4F8FA] flex justify-center items-center rounded-[2px]">
+                <div className="h-[130px] bg-[#F4F8FA] dark:bg-[#3c3c3c] flex justify-center items-center rounded-[2px]">
                   {value.profile_picture ? (
                     <img src={value.profile_picture} alt="Profile" width={97} />
                   ) : (
@@ -237,7 +237,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
             <button
               type="button"
               onClick={handleUpdateEmployee}
-              className="bg-blue-500 text-white !px-2.5 !py-1 rounded-[2px] !mt-2 text-[14px] cursor-pointer"
+              className="bg-blue-500 dark:bg-[#2A46AD] text-white !px-2.5 !py-1 rounded-[2px] !mt-2 text-[14px] cursor-pointer"
               disabled={loading}>
               {loading ? (
                 <span>
@@ -249,7 +249,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
               )}
             </button>
             <button
-              className="bg-gray-400 text-white !px-2.5 !py-1 rounded-[2px] !mt-2 text-[14px] cursor-pointer"
+              className="bg-gray-400 dark:bg-[#535353] text-white !px-2.5 !py-1 rounded-[2px] !mt-2 text-[14px] cursor-pointer"
               onClick={handleClose}>
               Cancel
             </button>

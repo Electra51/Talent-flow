@@ -43,7 +43,7 @@ const DeleteConfirmationModal = ({ employee, onClose, fetchEmployeeData }) => {
     <dialog
       id="employee_modal_delete"
       className="modal modal-bottom sm:modal-middle">
-      <div className="modal-box bg-white dark:bg-gray-400 !px-5 !py-4">
+      <div className="modal-box bg-white dark:bg-[#1e1e1e] border border-gray-50 dark:border-[#3c3c3c] !px-5 !py-4">
         <p className="font-medium text-[16px] !mb-3 border-0 border-b border-gray-200">
           Delete Employee Here
         </p>
@@ -68,7 +68,7 @@ const DeleteConfirmationModal = ({ employee, onClose, fetchEmployeeData }) => {
               )}
             </button>
             <button
-              className="bg-gray-400 text-white !px-2.5 !py-1 rounded-[2px] !mt-2 text-[14px] cursor-pointer"
+              className="bg-gray-400 dark:bg-[#535353] text-white !px-2.5 !py-1 rounded-[2px] !mt-2 text-[14px] cursor-pointer"
               onClick={handleClose}>
               Cancel
             </button>

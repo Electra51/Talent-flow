@@ -50,7 +50,7 @@ const EmployeeDetailById = () => {
           <div>
             <p className="text-[16px] !mt-1 font-semibold">
               Employee Name:
-              <span className="font-normal">{employee?.employee_name}</span>
+              <span className="font-normal"> {employee?.employee_name}</span>
             </p>
             <p className="text-[16px] !mt-1 font-semibold">
               Department:{" "}
