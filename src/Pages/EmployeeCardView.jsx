@@ -1,107 +1,111 @@
-import React, { useState, useEffect } from "react";
-import { MdDelete, MdEmail, MdLocationPin, MdPhone } from "react-icons/md";
-import img1 from "../assets/man1.jpeg";
-import img6 from "../assets/man6.jpeg";
+import React, { useEffect, useState } from "react";
 import PageHeader from "../component/Shared/PageHeader";
-import Modal from "../component/Shared/Modal";
-
-const getInitialEmployees = () => {
-  const storedEmployees = localStorage.getItem("employees");
-  return storedEmployees
-    ? JSON.parse(storedEmployees)
-    : [
-        {
-          name: "John Doe",
-          profileImage: img1,
-          phone: "+1 555-1234",
-          email: "john.doe@example.com",
-          address: "123 Main St, New York, NY 10001",
-        },
-        {
-          name: "Jane Smith",
-          profileImage: img6,
-          phone: "+1 555-5678",
-          email: "jane.smith@example.com",
-          address: "456 Elm St, Los Angeles, CA 90012",
-        },
-      ];
-};
+import { MdDelete, MdEmail, MdLocationPin, MdPhone } from "react-icons/md";
+import { IoMdEye } from "react-icons/io";
+import Loader from "../component/Shared/Loader";
+import axios from "axios";
+import DeleteConfirmationModal from "../component/Modal/DeleteConfirmationModal";
+import { Link } from "react-router";
 
 const EmployeeCardView = () => {
-  const [employees, setEmployees] = useState(getInitialEmployees);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [employeeData, setEmployeeData] = useState();
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [actionType, setActionType] = useState("");
-
+  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
+    useState(false);
+  const fetchEmployeeData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/employee/employee-all"
+      );
+      if (response.status === 200) {
+        setEmployeeData(response.data);
+      }
+    } catch (err) {
+      setError(err.message || "Error fetching data");
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    localStorage.setItem("employees", JSON.stringify(employees));
-  }, [employees]);
-
-  //  Open Modal
-  const openModal = (employee = null, type) => {
-    setSelectedEmployee(employee);
-    setActionType(type);
-
-    document.getElementById("employee_modal").showModal();
-  };
-
-  // Delete Employee
-  const handleDelete = () => {
-    setEmployees(employees.filter((emp) => emp.id !== selectedEmployee.id));
-    document.getElementById("employee_modal").close();
-  };
+    fetchEmployeeData();
+  }, []);
 
   return (
     <div>
-      <PageHeader
-        title={"Employee Card View"}
-        openModal={openModal}
-        menu={"Employee Card View"}
-      />
-      <div className="rounded-sm grid grid-cols-4 gap-10">
-        {employees?.map((employee, i) => {
-          console.log("em", employee);
-          return (
-            <div
-              className="bg-white dark:bg-base-200 shadow-xl h-[430px] border border-gray-300  rounded-sm w-[365px]"
-              key={i}>
-              <div className="avatar !mx-auto !py-4 !px-2 h-[230px] w-[365px]">
-                <img
-                  src={employee?.profileImage}
-                  alt={employee?.name}
-                  className="w-full h-full !object-contain"
-                />
-              </div>
+      <PageHeader title={"Employee Card View"} />
+      <div>
+        {loading ? (
+          <div className="!py-32">
+            <Loader />
+          </div>
+        ) : (
+          <div className="rounded-sm grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+            {employeeData?.map((employee, i) => {
+              console.log("em", employee);
+              return (
+                <div
+                  className="bg-white dark:bg-base-200 shadow-xl border border-blue-100 rounded-sm "
+                  key={i}>
+                  <div className="avatar h-[180px] w-full !p-3">
+                    <img
+                      src={employee?.profile_picture}
+                      alt={employee?.employee_name}
+                      className="w-full h-full !object-cover"
+                    />
+                  </div>
 
-              <div className="!px-6">
-                <h2 className="font-bold text-[18px]">{employee?.name}</h2>
-                <p className="!p-0 flex justify-start items-center gap-1.5 !mt-2">
-                  <MdEmail /> {employee?.email}
-                </p>
-                <p className="!p-0 flex justify-start items-center gap-1.5">
-                  <MdPhone />
-                  {employee?.phone}
-                </p>
-                <p className="!p-0 flex justify-start items-center gap-1.5">
-                  <MdLocationPin />
-                  {employee?.address}
-                </p>
-                <button
-                  className="flex justify-center items-center gap-1.5 text-white border border-red-500 w-[100px] !mr-auto !mt-5 !py-1.5 rounded-[2px] bg-red-500 group hover:bg-red-600 hover:text-white cursor-pointer"
-                  onClick={() => openModal(employee, "delete")}>
-                  Delete
-                  <MdDelete className="text-white group-hover:text-white cursor-pointer text-xl" />
-                </button>
-              </div>
-            </div>
-          );
-        })}
+                  <div className="!px-3 !pb-3">
+                    <h2 className="font-bold text-[16px]">
+                      {employee?.employee_name}
+                    </h2>
+                    <p className="!p-0 flex justify-start items-center gap-1.5 !mt-2 text-[14px]">
+                      <MdEmail /> {employee?.email}
+                    </p>
+                    <p className="!p-0 flex justify-start items-center gap-1.5 text-[14px]">
+                      <MdPhone />
+                      {employee?.phone}
+                    </p>
+                    <p className="!p-0 flex justify-start items-center gap-1.5 text-[14px]">
+                      <MdLocationPin />
+                      {employee?.address}
+                    </p>
+                    <div className="flex justify-between items-center gap-2">
+                      <Link
+                        to={`/employee/${employee?._id}`}
+                        className="flex justify-center items-center gap-1.5 text-[#2946AD] border border-[#2946AD] w-1/2 !mr-auto !mt-5 !py-1 rounded-[2px]  group hover:bg-[#2946AD] hover:text-white cursor-pointer text-[14px]">
+                        View Details
+                        <IoMdEye className="text-[#2946AD] group-hover:text-white cursor-pointer text-xl" />
+                      </Link>
+                      <button
+                        className="flex justify-center items-center gap-1.5 text-white border border-red-500 w-1/2 !mr-auto !mt-5 !py-1 rounded-[2px] bg-red-500 group hover:bg-red-600 hover:text-white cursor-pointer text-[14px]"
+                        onClick={() => {
+                          setSelectedEmployee(employee);
+                          setIsDeleteConfirmModalOpen(true);
+                        }}>
+                        Delete
+                        <MdDelete className="text-white group-hover:text-white cursor-pointer text-xl" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
-      <Modal
-        actionType={"delete"}
-        value={""}
-        selectedEmployee={selectedEmployee}
-        handleDelete={handleDelete}
-      />
+      {isDeleteConfirmModalOpen && (
+        <DeleteConfirmationModal
+          employee={selectedEmployee}
+          onClose={() => {
+            setIsDeleteConfirmModalOpen(false);
+            setSelectedEmployee(null);
+          }}
+          fetchEmployeeData={fetchEmployeeData}
+        />
+      )}
     </div>
   );
 };

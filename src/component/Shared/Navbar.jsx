@@ -3,10 +3,10 @@ import { MdMenu, MdOutlineAccountCircle } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { MoonIcon, SunIcon } from "./Icons";
 import { Link, NavLink } from "react-router";
-import { sidebarDataForMobile } from "../Data";
 import { CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
 import Logo from "./Logo";
+import { sidebarDataForMobile } from "./Data";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

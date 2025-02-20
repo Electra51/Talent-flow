@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { sidebarData } from "../Data";
+import { sidebarData } from "./Data";
+
 const Sidebar = () => {
   return (
     <div className="w-[270px] bg-blue-50 h-[100vh] relative hidden md:block">

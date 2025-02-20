@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router";
 import EmployeeCardView from "../Pages/EmployeeCardView";
 import Dashboard from "../Pages/Dashboard";
 import EmployeeTableView from "../Pages/EmployeeTableView";
+import EmployeeDetailById from "../Pages/EmployeeDetailById";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
       {
         path: "/employee-list",
         element: <EmployeeCardView />,
+      },
+      {
+        path: "/employee/:id",
+        element: <EmployeeDetailById />,
       },
       {
         path: "/employee-table",

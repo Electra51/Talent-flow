@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "../component/Shared/PageHeader";
-import axios from "axios";
 import DataTable from "react-data-table-component";
 import { MdDelete, MdEdit } from "react-icons/md";
 import EmployeeAddModal from "../component/Modal/EmployeeAddModal";
 import EmployeeEditModal from "../component/Modal/EmployeeEditModal";
 import DeleteConfirmationModal from "../component/Modal/DeleteConfirmationModal";
+import axios from "axios";
+import Loader from "../component/Shared/Loader";
+import { IoMdEye } from "react-icons/io";
+import { Link } from "react-router";
 
 const EmployeeTableView = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,6 +38,7 @@ const EmployeeTableView = () => {
     fetchEmployeeData();
   }, []);
 
+  console.log("employeeData", employeeData);
   const columns = [
     {
       name: "Employee Name",
@@ -66,6 +70,9 @@ const EmployeeTableView = () => {
       button: true,
       cell: (row) => (
         <div className="flex gap-2">
+          <Link to={`/employee/${row?._id}`}>
+            <IoMdEye className="text-black cursor-pointer text-xl" />
+          </Link>
           <MdEdit
             className="text-blue-500 cursor-pointer text-xl"
             onClick={() => {
@@ -98,7 +105,9 @@ const EmployeeTableView = () => {
         </button>
       </div>
       {loading ? (
-        <div>Loading...</div>
+        <div className="!py-10">
+          <Loader />
+        </div>
       ) : (
         <div className="border border-gray-300 rounded-sm">
           <DataTable columns={columns} data={employeeData} />
