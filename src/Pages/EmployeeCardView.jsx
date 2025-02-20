@@ -123,7 +123,7 @@ const EmployeeCardView = () => {
                   console.log("em", employee);
                   return (
                     <div
-                      className="bg-white dark:bg-base-200 shadow-xl border border-blue-100 rounded-sm "
+                      className="bg-white dark:bg-base-200 shadow-xl border border-blue-100 rounded-sm transition-transform duration-500 hover:scale-102"
                       key={i}>
                       <div className="avatar h-[180px] w-full !p-3">
                         <img

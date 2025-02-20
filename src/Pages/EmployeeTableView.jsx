@@ -55,6 +55,7 @@ const EmployeeTableView = () => {
 
     return matchesSearch && matchesFilter;
   });
+
   const columns = [
     {
       name: "Employee Name",

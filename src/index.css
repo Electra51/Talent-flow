@@ -46,3 +46,9 @@ textarea:focus {
     transform: translateY(0px);
   }
 }
+[id^="row-"] {
+  transition: transform 0.3s ease, background 0.2s ease;
+}
+[id^="row-"]:hover {
+  background: #eff6ff !important;
+}
