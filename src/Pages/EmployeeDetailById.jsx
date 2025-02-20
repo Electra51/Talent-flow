@@ -34,7 +34,7 @@ const EmployeeDetailById = () => {
 
   return (
     <div>
-      <PageHeader title={`Employee Name: ${employee?.employee_name}`} />
+      <PageHeader title={"Employee Details"} type={"details"} />
       {loading ? (
         <div>
           <Loader />
@@ -48,6 +48,10 @@ const EmployeeDetailById = () => {
             />
           </div>
           <div>
+            <p className="text-[16px] !mt-1 font-semibold">
+              Employee Name:
+              <span className="font-normal">{employee?.employee_name}</span>
+            </p>
             <p className="text-[16px] !mt-1 font-semibold">
               Department:{" "}
               <span className="font-normal">{employee?.department}</span>

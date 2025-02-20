@@ -19,6 +19,8 @@ const EmployeeTableView = () => {
   const [error, setError] = useState(false);
   const [employeeData, setEmployeeData] = useState();
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("");
   const fetchEmployeeData = async () => {
     setLoading(true);
     try {
@@ -39,6 +41,20 @@ const EmployeeTableView = () => {
   }, []);
 
   console.log("employeeData", employeeData);
+  const filteredEmployeeData = employeeData?.filter((employee) => {
+    const matchesSearch =
+      employee.employee_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employee.email.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesFilter =
+      selectedFilter === "All" ||
+      (selectedFilter === "Active" && employee.status === "Active") ||
+      (selectedFilter === "InActive" && employee.status === "InActive") ||
+      (selectedFilter === "OnLeave" && employee.status === "OnLeave") ||
+      (selectedFilter !== "status" && employee.department === selectedFilter);
+
+    return matchesSearch && matchesFilter;
+  });
   const columns = [
     {
       name: "Employee Name",
@@ -93,24 +109,27 @@ const EmployeeTableView = () => {
   ];
   return (
     <div>
-      <div className="flex justify-between items-start">
-        <PageHeader title={"Employee table View"} />
-        <button
-          className="bg-[#81B2F1] hover:bg-[#2A46AD] cursor-pointer text-white rounded-sm !px-2.5 !py-1.5 font-medium text-[14px]"
-          onClick={() => setIsModalOpen(true)}
-          style={{
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-          }}>
-          + Create Employee
-        </button>
-      </div>
+      <PageHeader
+        title={"Employee table View"}
+        setIsModalOpen={setIsModalOpen}
+        type={"table-view"}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+      />
+
       {loading ? (
         <div className="!py-10">
           <Loader />
         </div>
       ) : (
         <div className="border border-gray-300 rounded-sm">
-          <DataTable columns={columns} data={employeeData} />
+          {searchTerm || selectedFilter ? (
+            <DataTable columns={columns} data={filteredEmployeeData} />
+          ) : (
+            <DataTable columns={columns} data={employeeData} />
+          )}
         </div>
       )}
       {isModalOpen && (
