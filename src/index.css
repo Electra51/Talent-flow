@@ -10,8 +10,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", serif;
-  /* overflow-x: hidden;
-  overflow-y: hidden; */
 }
 
 input,
@@ -47,7 +45,6 @@ textarea:focus {
   }
 }
 [id^="row-"] {
-  /* background: #dcdbdb !important; */
   transition: transform 0.3s ease, background 0.2s ease;
 }
 [id^="row-"]:hover {

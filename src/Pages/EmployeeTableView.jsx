@@ -9,6 +9,7 @@ import axios from "axios";
 import Loader from "../component/Shared/Loader";
 import { IoMdEye } from "react-icons/io";
 import { Link } from "react-router";
+import HelmetReact from "../component/Shared/HelmetReact";
 
 const EmployeeTableView = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +18,7 @@ const EmployeeTableView = () => {
     useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [employeeData, setEmployeeData] = useState();
+  const [employeeData, setEmployeeData] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("");
@@ -25,7 +26,7 @@ const EmployeeTableView = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:8080/api/v1/employee/employee-all"
+        `${import.meta.env.VITE_API_URL}/employee/employee-all`
       );
       if (response.status === 200) {
         setEmployeeData(response.data);
@@ -40,7 +41,6 @@ const EmployeeTableView = () => {
     fetchEmployeeData();
   }, []);
 
-  console.log("employeeData", employeeData);
   const filteredEmployeeData = employeeData?.filter((employee) => {
     const matchesSearch =
       employee.employee_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -53,7 +53,7 @@ const EmployeeTableView = () => {
       (selectedFilter === "OnLeave" && employee.status === "OnLeave") ||
       (selectedFilter !== "status" && employee.department === selectedFilter);
 
-    return matchesSearch && matchesFilter;
+    return matchesSearch && (selectedFilter ? matchesFilter : true);
   });
 
   const columns = [
@@ -111,6 +111,7 @@ const EmployeeTableView = () => {
 
   return (
     <div>
+      <HelmetReact title={"EmFLow | Table View"} />
       <PageHeader
         title={"Employee table View"}
         setIsModalOpen={setIsModalOpen}
@@ -127,25 +128,11 @@ const EmployeeTableView = () => {
         </div>
       ) : (
         <div className="border border-gray-300 rounded-sm">
-          {/* {searchTerm || selectedFilter ? (
-            <DataTable
-              columns={columns}
-              data={filteredEmployeeData}
-              className="dark:bg-red-900 dark:text-white"
-            />
-          ) : (
-            <DataTable
-              columns={columns}
-              data={employeeData}
-              className="dark:bg-red-900 dark:text-white"
-            />
-          )} */}
           <DataTable
             columns={columns}
             data={
               searchTerm || selectedFilter ? filteredEmployeeData : employeeData
             }
-            // className="dark:bg-red-900 dark:text-white"
           />
         </div>
       )}

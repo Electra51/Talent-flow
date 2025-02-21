@@ -79,7 +79,7 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
         const imageFormData = new FormData();
         imageFormData.append("image", profileImage);
         const imageUploadResponse = await axios.post(
-          "http://localhost:8080/api/v1/employee/upload-image",
+          `${import.meta.env.VITE_API_URL}/employee/upload-image`,
           imageFormData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -89,7 +89,9 @@ const EmployeeEditModal = ({ employee, onClose, fetchEmployeeData }) => {
       }
       const employeeData = { ...value, profile_picture: imageUrl };
       await axios.patch(
-        `http://localhost:8080/api/v1/employee/employee-update/${employee._id}`,
+        `${import.meta.env.VITE_API_URL}/employee/employee-update/${
+          employee._id
+        }`,
         employeeData
       );
 

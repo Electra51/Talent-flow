@@ -26,7 +26,9 @@ const DeleteConfirmationModal = ({ employee, onClose, fetchEmployeeData }) => {
     setLoading(true);
     try {
       await axios.delete(
-        `http://localhost:8080/api/v1/employee/employee-delete/${employee._id}`
+        `${import.meta.env.VITE_API_URL}/employee/employee-delete/${
+          employee._id
+        }`
       );
       setLoading(false);
       handleClose();

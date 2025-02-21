@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "../component/Shared/PageHeader";
-
 import Loader from "../component/Shared/Loader";
 import axios from "axios";
 import DeleteConfirmationModal from "../component/Modal/DeleteConfirmationModal";
 import Card from "../component/Shared/Card";
+import HelmetReact from "../component/Shared/HelmetReact";
 
 const EmployeeCardView = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [employeeData, setEmployeeData] = useState();
+  const [employeeData, setEmployeeData] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
     useState(false);
@@ -20,7 +20,7 @@ const EmployeeCardView = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:8080/api/v1/employee/employee-all"
+        `${import.meta.env.VITE_API_URL}/employee/employee-all`
       );
       if (response.status === 200) {
         setEmployeeData(response.data);
@@ -35,6 +35,7 @@ const EmployeeCardView = () => {
     fetchEmployeeData();
   }, []);
 
+  console.log("employeeData", employeeData);
   const filteredEmployeeData = employeeData?.filter((employee) => {
     const matchesSearch =
       employee.employee_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -47,11 +48,12 @@ const EmployeeCardView = () => {
       (selectedFilter === "OnLeave" && employee.status === "OnLeave") ||
       (selectedFilter !== "status" && employee.department === selectedFilter);
 
-    return matchesSearch && matchesFilter;
+    return matchesSearch && (selectedFilter ? matchesFilter : true);
   });
 
   return (
     <div>
+      <HelmetReact title={"EmFLow | Card View"} />
       <PageHeader
         title={"Employee Card View"}
         type="card-view"
@@ -68,15 +70,13 @@ const EmployeeCardView = () => {
           </div>
         ) : (
           <div className="rounded-sm grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
-            {searchTerm || selectedFilter
-              ? filteredEmployeeData?.map((employee, i) => {
-                  console.log("em", employee);
-                  return <Card employee={employee} key={i} />;
-                })
-              : employeeData?.map((employee, i) => {
-                  console.log("em", employee);
-                  return <Card employee={employee} key={i} />;
-                })}
+            {(searchTerm || selectedFilter
+              ? filteredEmployeeData
+              : employeeData
+            )?.map((employee, i) => {
+              console.log("em", employee);
+              return <Card employee={employee} key={i} />;
+            })}
           </div>
         )}
       </div>

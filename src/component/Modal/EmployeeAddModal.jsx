@@ -115,7 +115,7 @@ const EmployeeAddModal = ({ onClose, fetchEmployeeData }) => {
         const imageFormData = new FormData();
         imageFormData.append("image", profileImage);
         const imageUploadResponse = await axios.post(
-          "http://localhost:8080/api/v1/employee/upload-image",
+          `${import.meta.env.VITE_API_URL}/employee/upload-image`,
           imageFormData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -125,7 +125,7 @@ const EmployeeAddModal = ({ onClose, fetchEmployeeData }) => {
       }
       const employeeData = { ...value, profile_picture: imageUrl };
       await axios.post(
-        "http://localhost:8080/api/v1/employee/employee-add",
+        `${import.meta.env.VITE_API_URL}/employee/employee-add`,
         employeeData
       );
       setValue({

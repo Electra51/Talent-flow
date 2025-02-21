@@ -5,6 +5,7 @@ import EmployeeCardView from "../Pages/EmployeeCardView";
 import Dashboard from "../Pages/Dashboard";
 import EmployeeTableView from "../Pages/EmployeeTableView";
 import EmployeeDetailById from "../Pages/EmployeeDetailById";
+import LoginPage from "../Pages/LoginPage";
 
 export const router = createBrowserRouter([
   {
@@ -29,5 +30,9 @@ export const router = createBrowserRouter([
         element: <EmployeeTableView />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
 ]);

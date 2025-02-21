@@ -15,7 +15,7 @@ const EmployeeDetailById = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/v1/employee/${id}`
+          `${import.meta.env.VITE_API_URL}/employee/${id}`
         );
         if (response.status === 200) {
           setEmployee(response.data.employee);
@@ -40,7 +40,7 @@ const EmployeeDetailById = () => {
           <Loader />
         </div>
       ) : (
-        <div className="flex justify-normal items-start gap-5">
+        <div className="block md:flex lg:flex justify-normal items-start gap-5">
           <div>
             <img
               src={employee?.profile_picture}

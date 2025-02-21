@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../component/Shared/PageHeader";
 import imgEmployee from "../assets/employee.png";
 import axios from "axios";
+import HelmetReact from "../component/Shared/HelmetReact";
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [employeeData, setEmployeeData] = useState();
@@ -9,7 +10,7 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:8080/api/v1/employee/employee-all"
+        `${import.meta.env.VITE_API_URL}/employee/employee-all`
       );
       if (response.status === 200) {
         setEmployeeData(response.data);
@@ -25,6 +26,7 @@ const Dashboard = () => {
   }, []);
   return (
     <div>
+      <HelmetReact title={"EmFLow | Dashboard"} />
       <PageHeader title={"Welcome to Dashboard 😊"} type={"dashboard"} />
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
         <div className="rounded-[2px] border border-gray-300 dark:border-[#3c3c3c] !p-3">

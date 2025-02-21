@@ -7,6 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
 import Logo from "./Logo";
 import { sidebarDataForMobile } from "./Data";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,11 @@ const Navbar = () => {
       document.querySelector("html").setAttribute("data-theme", "light");
     }
   }, [dark]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    toast.success("logout successfully");
+  };
 
   return (
     <>
@@ -58,7 +64,10 @@ const Navbar = () => {
                     <CgProfile className="text-[16px]" /> Profile
                   </Link>
 
-                  <Link className="hover:bg-[#2946AD] dark:hover:bg-[#3c3c3c] text-black dark:text-[#bab8b8] hover:text-white !px-2 !py-1 rounded-[2px] flex justify-start items-center gap-1.5 font-medium">
+                  <Link
+                    to={"/login"}
+                    className="hover:bg-[#2946AD] dark:hover:bg-[#3c3c3c] text-black dark:text-[#bab8b8] hover:text-white !px-2 !py-1 rounded-[2px] flex justify-start items-center gap-1.5 font-medium"
+                    onClick={handleLogout}>
                     <FiLogOut className="text-[16px]" /> Logout
                   </Link>
                 </ul>
